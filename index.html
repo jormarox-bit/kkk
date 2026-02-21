@@ -1,122 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Unsent Project - Digital Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary-color: #ff758c;
-            --secondary-color: #ff7eb3;
-            --bg-color: #fff0f3;
-            --card-bg: #ffffff;
-            --text-color: #4a4a4a;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            background: var(--bg-color);
-            font-family: 'Quicksand', sans-serif;
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-
-        /* Background Animation */
-        #background-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; overflow: hidden; }
-        .heart { position: absolute; bottom: -10vh; background-color: var(--primary-color); opacity: 0.6; animation: rise 8s infinite ease-in; transform: rotate(45deg); }
-        .heart::before, .heart::after { content: ""; position: absolute; width: 100%; height: 100%; background-color: inherit; border-radius: 50%; }
-        .heart::before { top: -50%; left: 0; }
-        .heart::after { top: 0; left: -50%; }
-        @keyframes rise { 0% { bottom: -10vh; opacity: 0; } 20% { opacity: 0.6; } 100% { bottom: 110vh; opacity: 0; } }
-
-        /* Main Container */
-        .container {
-            background: var(--card-bg);
-            width: 100%;
-            max-width: 600px;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-        }
-
-        h1, h2 { font-family: 'Dancing Script', cursive; color: var(--primary-color); text-align: center; margin-bottom: 20px; }
-
-        .input-group { margin-bottom: 15px; }
-        label { font-weight: bold; color: var(--secondary-color); display: block; margin-bottom: 5px; }
-        input, textarea { width: 100%; padding: 12px; border: 2px solid #f0f0f0; border-radius: 10px; font-family: inherit; outline: none; }
-        textarea { height: 120px; }
-
-        /* Photo Grid */
-        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 15px 0; }
-        .frame { height: 120px; border: 2px dashed #ddd; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; position: relative; }
-        .frame img { width: 100%; height: 100%; object-fit: cover; display: none; }
-
-        .btn {
-            width: 100%;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white; border: none; padding: 15px; border-radius: 50px;
-            font-family: 'Dancing Script', cursive; font-size: 1.3rem; cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .btn:hover { transform: scale(1.02); }
-
-        /* Find Section */
-        #find-letter-section { border-top: 2px solid #ffeef1; padding-top: 30px; margin-top: 20px; }
-        
-        /* Letter Display (Hidden by default) */
-        #letter-display {
-            display: none;
-            background: white;
-            padding: 40px;
-            border-radius: 5px; /* Boxy like Unsent Project */
-            box-shadow: 10px 10px 0px var(--primary-color);
-            margin-top: 30px;
-            width: 100%;
-            max-width: 600px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .music-player { margin-top: 20px; border-radius: 12px; overflow: hidden; }
-
-        .hidden { display: none !important; }
-    </style>
-</head>
+    </head>
 <body>
-
     <div id="background-animation"></div>
 
     <div class="container" id="editor">
-        <h1>Write Your Unsent Letter</h1>
-        <div class="input-group">
-            <label>Recipient's Name (To:)</label>
-            <input type="text" id="recipient" placeholder="Their name (exactly as they'll type it)">
         </div>
-        <div class="input-group">
-            <label>Your Message</label>
-            <textarea id="letter-content" placeholder="What's left unsaid?"></textarea>
-        </div>
-        <div class="input-group">
-            <label>Song Link (Spotify or YouTube)</label>
-            <input type="text" id="song-url" placeholder="Paste link here...">
-        </div>
-
-        <div class="photo-grid">
-            <div class="frame" onclick="triggerUpload(0)"><span id="p0">+</span><img id="img-0"><input type="file" hidden onchange="previewImage(this, 0)"></div>
-            <div class="frame" onclick="triggerUpload(1)"><span id="p1">+</span><img id="img-1"><input type="file" hidden onchange="previewImage(this, 1)"></div>
-        </div>
-
-        <button class="btn" onclick="saveLetter()">Seal Letter ❤️</button>
-    </div>
 
     <div class="container" id="find-letter-section">
         <h2>Find a Letter</h2>
@@ -124,90 +14,139 @@
             <input type="text" id="search-name" placeholder="Enter your name to search...">
         </div>
         <button class="btn" style="background: #4a4a4a;" onclick="findLetter()">Search Archives</button>
+        
+        <hr style="margin: 30px 0; border: 1px solid #ffeef1;">
+        <h3 style="text-align: center; color: var(--secondary-color); font-family: 'Dancing Script';">Recently Sent To...</h3>
+        <div id="public-feed" style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+            <p style="color: #888; font-size: 0.9rem;">Loading global archives...</p>
+        </div>
     </div>
 
     <div id="letter-display">
-        <h3 id="display-to" style="font-family: 'Dancing Script'; font-size: 2rem; color: var(--primary-color);"></h3>
-        <p id="display-text" style="line-height: 1.6; margin: 20px 0; white-space: pre-wrap;"></p>
-        <div id="display-photos" class="photo-grid"></div>
-        <div id="music-container" class="music-player"></div>
-        <button class="btn" style="margin-top: 20px; font-size: 1rem;" onclick="location.reload()">Back</button>
-    </div>
+       </div>
 
-    <script>
-        // Data Store (Simulated Database)
-        let savedData = null;
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, get, query, orderByChild, equalTo, limitToLast, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        function triggerUpload(i) { document.querySelectorAll('input[type="file"]')[i].click(); }
+        // TODO: Replace this with your own Firebase Config (I'll explain how below)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "your-project.firebaseapp.com",
+            databaseURL: "https://your-project-default-rtdb.firebaseio.com",
+            projectId: "your-project",
+            storageBucket: "your-project.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
-        function previewImage(input, i) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = document.getElementById(`img-${i}`);
-                    img.src = e.target.result;
-                    img.style.display = 'block';
-                    document.getElementById(`p${i}`).style.display = 'none';
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
 
-        function saveLetter() {
-            const name = document.getElementById('recipient').value.trim().toLowerCase();
-            if(!name) return alert("Please enter a name!");
+        // --- GLOBAL FUNCTIONS ---
+
+        // Make functions globally available to your HTML buttons
+        window.saveLetter = async function() {
+            const nameInput = document.getElementById('recipient').value;
+            const nameSearchable = nameInput.trim().toLowerCase();
+            const content = document.getElementById('letter-content').value;
+            const song = document.getElementById('song-url').value;
             
-            // Collect images
+            if(!nameInput || !content) return alert("Please enter a name and a message!");
+            
+            // Get Images (Note: For a real app, storing large images requires Firebase Storage, but this works for tiny images)
             const imgs = [document.getElementById('img-0').src, document.getElementById('img-1').src].filter(src => src.startsWith('data'));
 
-            savedData = {
-                name: name,
-                displayBrand: document.getElementById('recipient').value,
-                content: document.getElementById('letter-content').value,
-                song: document.getElementById('song-url').value,
-                photos: imgs
+            const newLetter = {
+                searchName: nameSearchable,
+                displayName: nameInput,
+                content: content,
+                song: song,
+                photos: imgs,
+                timestamp: Date.now()
             };
 
-            alert("Letter Sealed! Now try searching for it below.");
-            document.getElementById('editor').classList.add('hidden');
-        }
-
-        function findLetter() {
-            const search = document.getElementById('search-name').value.trim().toLowerCase();
-            
-            if (savedData && search === savedData.name) {
-                document.getElementById('find-letter-section').classList.add('hidden');
-                document.getElementById('letter-display').style.display = 'block';
-                
-                document.getElementById('display-to').innerText = "To: " + savedData.displayBrand;
-                document.getElementById('display-text').innerText = savedData.content;
-                
-                // Embed Music
-                const musicBox = document.getElementById('music-container');
-                if(savedData.song.includes('spotify')) {
-                    const id = savedData.song.split('track/')[1]?.split('?')[0];
-                    musicBox.innerHTML = `<iframe src="https://open.spotify.com/embed/track/${id}" width="100%" height="80" frameBorder="0" allow="encrypted-media"></iframe>`;
-                } else if(savedData.song.includes('youtube')) {
-                    const id = savedData.song.split('v=')[1]?.split('&')[0];
-                    musicBox.innerHTML = `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen></iframe>`;
-                }
-            } else {
-                alert("No unsent letters found for this name yet.");
+            // Push to Global Database
+            try {
+                const lettersRef = ref(db, 'letters');
+                await push(lettersRef, newLetter);
+                alert("Letter Sealed and sent to the global archives! ❤️");
+                document.getElementById('editor').classList.add('hidden');
+            } catch (error) {
+                alert("Error saving letter: " + error.message);
             }
-        }
+        };
 
-        // Heart Background Logic
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            const size = Math.random() * 20 + 10 + 'px';
-            heart.style.width = size; heart.style.height = size;
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 5 + 's';
-            document.getElementById('background-animation').appendChild(heart);
-            setTimeout(() => heart.remove(), 8000);
-        }
-        setInterval(createHeart, 600);
+        window.findLetter = async function() {
+            const search = document.getElementById('search-name').value.trim().toLowerCase();
+            if(!search) return alert("Enter a name first!");
+
+            try {
+                const lettersRef = ref(db, 'letters');
+                // Search the database for the specific name
+                const q = query(lettersRef, orderByChild('searchName'), equalTo(search));
+                const snapshot = await get(q);
+
+                if (snapshot.exists()) {
+                    // Get the first matching letter
+                    const data = Object.values(snapshot.val())[0]; 
+                    
+                    document.getElementById('find-letter-section').classList.add('hidden');
+                    document.getElementById('letter-display').style.display = 'block';
+                    
+                    document.getElementById('display-to').innerText = "To: " + data.displayName;
+                    document.getElementById('display-text').innerText = data.content;
+                    
+                    // Handle Spotify/YouTube links (Using your existing logic)
+                    const musicBox = document.getElementById('music-container');
+                    if(data.song && data.song.includes('spotify')) {
+                        const id = data.song.split('track/')[1]?.split('?')[0];
+                        musicBox.innerHTML = `<iframe src="https://open.spotify.com/embed/track/${id}" width="100%" height="80" frameBorder="0" allow="encrypted-media"></iframe>`;
+                    } else if(data.song && data.song.includes('youtube')) {
+                        const id = data.song.split('v=')[1]?.split('&')[0];
+                        musicBox.innerHTML = `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen></iframe>`;
+                    }
+                } else {
+                    alert("No unsent letters found for this name yet.");
+                }
+            } catch (error) {
+                alert("Error searching: " + error.message);
+            }
+        };
+
+        // --- LIVE GLOBAL FEED ---
+        // This listens to the database and updates the public wall automatically
+        const recentLettersRef = query(ref(db, 'letters'), limitToLast(15));
+        onValue(recentLettersRef, (snapshot) => {
+            const feedContainer = document.getElementById('public-feed');
+            feedContainer.innerHTML = ''; // Clear loading text
+            
+            if (snapshot.exists()) {
+                const letters = [];
+                snapshot.forEach((child) => { letters.push(child.val()); });
+                letters.reverse(); // Show newest first
+
+                letters.forEach(letter => {
+                    const tag = document.createElement('span');
+                    tag.innerText = letter.displayName;
+                    tag.style.cssText = "background: white; padding: 5px 12px; border-radius: 20px; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); font-size: 0.9rem; border: 1px solid #ffeef1; cursor: pointer;";
+                    
+                    // Clicking a name in the feed automatically searches for it
+                    tag.onclick = () => {
+                        document.getElementById('search-name').value = letter.displayName;
+                        window.findLetter();
+                    };
+                    
+                    feedContainer.appendChild(tag);
+                });
+            } else {
+                feedContainer.innerHTML = '<p style="color: #888;">No letters sent yet. Be the first!</p>';
+            }
+        });
+
+        // (Keep your existing Heart Animation and Image Preview functions here, just attach them to the window object like: window.triggerUpload = function(...) { ... } )
     </script>
 </body>
 </html>
